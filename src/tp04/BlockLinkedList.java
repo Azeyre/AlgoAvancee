@@ -9,12 +9,12 @@ import java.util.ListIterator;
 public class BlockLinkedList<E> implements List<E> {
 
 	public static void main(String[] args){
-		BlockLinkedList<Integer> list = new BlockLinkedList<>(4);
-		list.add(12);
-		list.add(53);
-		list.add(12);
-		list.add(45);
-		list.add(34);
+		BlockLinkedList<String> list = new BlockLinkedList<>(4);
+		list.add("A");
+		list.add("B");
+		list.add("C");
+		list.add("D");
+		list.add(0, "Z");
 		System.out.println(list.toString());
 	}
 
@@ -46,16 +46,16 @@ public class BlockLinkedList<E> implements List<E> {
 		if(actuel.list.size() == actuel.max){
 			ArrayNode<E> node = new ArrayNode<>(actuel.max);
 			ArrayNode<E> tmp = actuel.next;
-			System.out.println(actuel.list.toString());
-			System.arraycopy(actuel.list, actuel.max / 2, node.list, 0, 2);
-			for(int k = actuel.max / 2 ; k < actuel.max ; k++){
+			for(int k = actuel.max / 2 ; k < actuel.list.size() ; k++){
+				node.list.add(actuel.list.get(k));
+			}
+			for(int k = actuel.list.size() - 1 ; k >= actuel.max / 2  ; k--){
 				actuel.list.remove(k);
 			}
-			actuel.list.add(e);
+			node.list.add(e);
 			actuel.next = node;
 			node.next = tmp;
 		} else {
-			System.out.println("Ici");
 			actuel.list.add(e);
 		}
 		return false;
@@ -72,8 +72,10 @@ public class BlockLinkedList<E> implements List<E> {
 					if(actuel.list.size() == actuel.max){
 						ArrayNode<E> node = new ArrayNode<E>(actuel.max);
 						ArrayNode<E> tmp = actuel.next;
-						System.arraycopy(actuel.list, actuel.max / 2, node.list, 0, actuel.max / 2);
-						for(int k = actuel.max / 2 ; k < actuel.max ; k++){
+						for(int k = actuel.max / 2 ; k < actuel.list.size() ; k++){
+							node.list.add(actuel.list.get(k));
+						}
+						for(int k = actuel.list.size() - 1 ; k >= actuel.max / 2  ; k--){
 							actuel.list.remove(k);
 						}
 						actuel.list.add(i % actuel.max, e);
@@ -247,10 +249,14 @@ public class BlockLinkedList<E> implements List<E> {
 	public String toString(){
 		String s = "[";
 		ArrayNode<E> actuel = first;
+		for(int i = 0 ; i < actuel.list.size() ; i++){
+			if(i != 0) s += ", ";
+			s += actuel.list.get(i);
+		}
+		actuel = actuel.next;
 		while(actuel != null){
 			for(int i = 0 ; i < actuel.list.size() ; i++){
-				if(i != 0) s += ", ";
-				s += actuel.list.get(i);
+				s += ", " + actuel.list.get(i);
 			}
 			actuel = actuel.next;
 		}
