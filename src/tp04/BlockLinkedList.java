@@ -16,6 +16,7 @@ public class BlockLinkedList<E> implements List<E> {
 		list.add("D");
 		list.add(0, "Z");
 		System.out.println(list.toString());
+		System.out.println(list.contains("A"));
 	}
 
 	public class ArrayNode<E> {
@@ -114,7 +115,7 @@ public class BlockLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean contains(Object o) {
-		return localisation((E) o) != 1;
+		return localisation((E) o) != -1;
 	}
 
 	@Override
