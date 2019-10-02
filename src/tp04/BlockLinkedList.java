@@ -243,8 +243,25 @@ public class BlockLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-
-		return false;
+		ArrayNode<E> actuel = first;
+		boolean modif = false;
+		for(Object o: c){
+			actuel = first;
+			while(actuel != null) {
+				for(int k = 0 ; k < actuel.list.size() ; k++){
+					if(!actuel.list.get(k).equals((E) o)) {
+						actuel.list.remove(k);
+						if(actuel.next != null && actuel.next.list.size() + actuel.list.size() <= actuel.max) {
+							actuel.list.addAll(actuel.next.list);
+							actuel.next = actuel.next.next;
+						}
+						modif = true;
+					}
+				}
+				actuel = actuel.next;
+			}
+		}
+		return modif;
 	}
 
 	@Override
