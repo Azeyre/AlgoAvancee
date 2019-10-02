@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class Parcours {
 
 	public static void main(String[] args){
+		int tours = 0;
 		boolean fini = false;
 		Labyrinthe l = new Labyrinthe();
 		//Pile stack = new Pile(l.n() * l.n());
@@ -12,7 +13,7 @@ public class Parcours {
 		Cellule debut = new Cellule(0,1);
 		Cellule fin = new Cellule(40, 39);
 		//System.out.println(fin.toString());
-		stack.push(debut);
+		stack.offer(debut);
 		l.poserMarque(debut.getX(), debut.getY());
 
 		while(!stack.isEmpty() && !fini){
@@ -23,20 +24,18 @@ public class Parcours {
 			} else {
 				Cellule temp = voisine(stack.peek(), l);
 				if(temp != null){
-					stack.push(temp);
+					stack.offer(temp);
 					l.poserMarque(temp.getX(), temp.getY());
-				} else if(temp == null && stack.peek().equals(debut)){
-					System.err.println("Aucune sortie possible.");
-					fini = true;
-				} else {
+				}  else {
 					l.poserMarqueRetour(stack.peek().getX(), stack.peek().getY());
-					stack.pop();
+					stack.poll();
 				}
 			}
 			try {
-				Thread.sleep(5);
+				Thread.sleep(3);
 			} catch (InterruptedException e) {}
 		}
+		System.out.println(tours);
 	}
 
 	private static Cellule voisine(Cellule courante, Labyrinthe l){
