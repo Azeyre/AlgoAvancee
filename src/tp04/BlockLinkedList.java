@@ -2,19 +2,19 @@ package tp04;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 
 public class BlockLinkedList<E> implements List<E> {
 
 	public static void main(String[] args){
-		BlockLinkedList<String> list = new BlockLinkedList<>(4);
-		list.add("A");
-		list.add("B");
-		list.add("C");
+		BlockLinkedList<Integer> list = new BlockLinkedList<>(4);
+		list.add(12);
+		list.add(53);
+		list.add(12);
+		list.add(45);
+		list.add(34);
 		System.out.println(list.toString());
 	}
 
@@ -32,10 +32,6 @@ public class BlockLinkedList<E> implements List<E> {
 	private final static int ARRAY_DEFAULT_SIZE = 4;
 	private ArrayNode<E> first;
 
-	public BlockLinkedList(){
-		this(ARRAY_DEFAULT_SIZE);
-	}
-
 	public BlockLinkedList(int n){
 		if(n % 2 == 1) throw new IllegalArgumentException();
 		first = new ArrayNode<E>(n);
@@ -48,9 +44,10 @@ public class BlockLinkedList<E> implements List<E> {
 			actuel = actuel.next;
 
 		if(actuel.list.size() == actuel.max){
-			ArrayNode<E> node = new ArrayNode<E>(actuel.max);
+			ArrayNode<E> node = new ArrayNode<>(actuel.max);
 			ArrayNode<E> tmp = actuel.next;
-			System.arraycopy(actuel.list, actuel.max / 2, node.list, 0, actuel.max / 2);
+			System.out.println(actuel.list.toString());
+			System.arraycopy(actuel.list, actuel.max / 2, node.list, 0, 2);
 			for(int k = actuel.max / 2 ; k < actuel.max ; k++){
 				actuel.list.remove(k);
 			}
@@ -58,6 +55,7 @@ public class BlockLinkedList<E> implements List<E> {
 			actuel.next = node;
 			node.next = tmp;
 		} else {
+			System.out.println("Ici");
 			actuel.list.add(e);
 		}
 		return false;
@@ -250,8 +248,9 @@ public class BlockLinkedList<E> implements List<E> {
 		String s = "[";
 		ArrayNode<E> actuel = first;
 		while(actuel != null){
-			for(E e: actuel.list){
-				s += e + ", ";
+			for(int i = 0 ; i < actuel.list.size() ; i++){
+				if(i != 0) s += ", ";
+				s += actuel.list.get(i);
 			}
 			actuel = actuel.next;
 		}
@@ -270,4 +269,5 @@ public class BlockLinkedList<E> implements List<E> {
 		}
 		return -1;
 	}
+
 }
