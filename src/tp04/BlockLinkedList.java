@@ -15,8 +15,10 @@ public class BlockLinkedList<E> implements List<E> {
 		list.add("C");
 		list.add("D");
 		list.add(0, "Z");
+		list.add("B");
 		System.out.println(list.toString());
 		System.out.println(list.contains("A"));
+		System.out.println(list.lastIndexOf("B"));
 	}
 
 	public class ArrayNode<E> {
@@ -160,9 +162,20 @@ public class BlockLinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public int lastIndexOf(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int lastIndexOf(Object o) {
+		int index = 0;
+		ArrayNode<E> actuel = first;
+		int indexTmp = -1;
+		while(actuel != null){
+			for(E e1: actuel.list){
+				if(e1.equals((E) o)){
+					indexTmp = index;
+				}
+				index++;
+			}
+			actuel = actuel.next;
+		}
+		return indexTmp;
 	}
 
 	@Override
