@@ -15,6 +15,7 @@ public class BlockLinkedList<E> implements List<E> {
 		list.add("C");
 		list.add("D");
 		list.add(0, "Z");
+		list.set(0, "H");
 		list.add("B");
 		System.out.println(list.toString());
 		System.out.println(list.contains("A"));
@@ -220,10 +221,10 @@ public class BlockLinkedList<E> implements List<E> {
 		int index = 0;
 		ArrayNode<E> actuel = first;
 		while(actuel != null){
-			for(E e: actuel.list){
-				if(index == i) {
-					e = e1;
-					return e;
+			for(int k = 0 ; k < actuel.list.size() ; k++){
+				if(index == i){
+					actuel.list.set(k, e1);
+					return e1;
 				}
 				index++;
 			}
