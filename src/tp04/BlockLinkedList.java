@@ -10,6 +10,9 @@ public class BlockLinkedList<E> implements List<E> {
 
 	public static void main(String[] args){
 		BlockLinkedList<String> list = new BlockLinkedList<>(4);
+		List<String> ret = new ArrayList<>();
+		ret.add("B");
+		ret.add("C");
 		list.add("A");
 		list.add("B");
 		list.add("C");
@@ -20,6 +23,8 @@ public class BlockLinkedList<E> implements List<E> {
 		System.out.println(list.toString());
 		System.out.println(list.contains("A"));
 		System.out.println(list.lastIndexOf("B"));
+		list.retainAll(ret);
+		System.out.println(list.toString());
 	}
 
 	public class ArrayNode<E> {
@@ -244,10 +249,11 @@ public class BlockLinkedList<E> implements List<E> {
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		ArrayNode<E> actuel = first;
-		boolean modif = false;
+		boolean modif = false, m = false;
 		for(Object o: c){
 			actuel = first;
-			while(actuel != null) {
+			m = false;
+			while(actuel != null && !m) {
 				for(int k = 0 ; k < actuel.list.size() ; k++){
 					if(!actuel.list.get(k).equals((E) o)) {
 						actuel.list.remove(k);
@@ -256,6 +262,7 @@ public class BlockLinkedList<E> implements List<E> {
 							actuel.next = actuel.next.next;
 						}
 						modif = true;
+						m = true;
 					}
 				}
 				actuel = actuel.next;
