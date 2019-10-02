@@ -102,7 +102,6 @@ public class BlockLinkedListTest {
 		list.add("C");
 		list.add("D");
 		assertEquals("[E, F, A, B, G, C, D]", list.toString());
-
 		String[] t = { "Z", "R", "P", "T" };
 		List<String> c = new ArrayList<>();
 		for (String s : t)
@@ -121,16 +120,13 @@ public class BlockLinkedListTest {
 		list.add("G");
 		list.add("C");
 		list.add("D");
-
 		list.remove(1);
 		assertEquals("[E, A, B, G, C, D]", list.toString());
 		list.remove(0);
 		assertEquals("[A, B, G, C, D]", list.toString());
 		list.remove(8);
 		assertEquals("[A, B, G, C, D]", list.toString());
-
 		list.remove("G");
 		assertEquals("[A, B, C, D]", list.toString());
-
 	}
 }

@@ -36,6 +36,10 @@ public class BlockLinkedList<E> implements List<E> {
 	private final static int ARRAY_DEFAULT_SIZE = 4;
 	private ArrayNode<E> first;
 
+	public BlockLinkedList(){
+		this(ARRAY_DEFAULT_SIZE);
+	}
+
 	public BlockLinkedList(int n){
 		if(n % 2 == 1) throw new IllegalArgumentException();
 		first = new ArrayNode<E>(n);
@@ -192,26 +196,54 @@ public class BlockLinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public boolean remove(Object arg0) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object o) {
+		ArrayNode<E> actuel = first;
+		while(actuel != null) {
+			for(int k = 0 ; k < actuel.list.size() ; k++){
+				if(actuel.list.get(k).equals((E) o)) {
+					actuel.list.remove(k);
+					if(actuel.next != null && actuel.next.list.size() + actuel.list.size() <= actuel.max) {
+						actuel.list.addAll(actuel.next.list);
+						actuel.next = actuel.next.next;
+					}
+				}
+			}
+			actuel = actuel.next;
+		}
 		return false;
 	}
 
 	@Override
-	public E remove(int arg0) {
-		// TODO Auto-generated method stub
+	public E remove(int idx) {
+		int index = 0;
+		ArrayNode<E> actuel = first;
+		while(actuel != null) {
+			for(int k = 0 ; k < actuel.list.size() ; k++){
+				if(index == idx) {
+					E tmp = actuel.list.get(k);
+					actuel.list.remove(k);
+					if(actuel.next != null && actuel.next.list.size() + actuel.list.size() <= actuel.max) {
+						actuel.list.addAll(actuel.next.list);
+						actuel.next = actuel.next.next;
+					}
+					return tmp;
+				}
+				index++;
+			}
+			actuel = actuel.next;
+		}
 		return null;
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
+	public boolean removeAll(Collection<?> c) {
+		for(Object o: c) remove(o);
 		return false;
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> arg0) {
-		// TODO Auto-generated method stub
+	public boolean retainAll(Collection<?> c) {
+
 		return false;
 	}
 
