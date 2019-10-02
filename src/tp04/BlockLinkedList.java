@@ -93,15 +93,18 @@ public class BlockLinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends E> arg0) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addAll(Collection<? extends E> c) {
+		for(E e: c)	add(e);
+		return true;
 	}
 
 	@Override
-	public boolean addAll(int arg0, Collection<? extends E> arg1) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addAll(int idx, Collection<? extends E> c) {
+		for(E e: c){
+			add(idx, e);
+			idx++;
+		}
+		return true;
 	}
 
 	@Override
